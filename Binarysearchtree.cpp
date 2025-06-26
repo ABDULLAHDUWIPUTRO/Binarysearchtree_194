@@ -3,77 +3,92 @@ using namespace std;
 
 class Node
 {
-    public:
+public:
     int info;
     Node *leftchild;
     Node *rightchild;
 
-    //constructor for the node class
+    // constructor for the node class
     Node()
     {
-        leftchild = nullptr; // initialize left child to null
+        leftchild = nullptr;  // initialize left child to null
         rightchild = nullptr; // initialize right child to null
     }
 };
 
 class BinaryTree
 {
-    public:
+public:
     Node *ROOT;
-   
+
     BinaryTree()
     {
         ROOT = nullptr; // initializing root  to null
     }
-    
+
     void insert()
     {
         int x;
         cout << "masukan nilai: ";
         cin >> x;
 
-        //step 1: allocate memory for the new node 
+        // step 1: allocate memory for the new node
         Node *newNode = new Node();
 
         // step 2: assign value to the data field of the new node
         newNode->info = x;
 
-        //step 3: make the left and right child of the new node point to NULL
+        // step 3: make the left and right child of the new node point to NULL
         newNode->leftchild = nullptr;
         newNode->rightchild = nullptr;
 
-        //step 4: locate the node which will be the parent of the new node to be inserted
+        // step 4: locate the node which will be the parent of the new node to be inserted
         Node *parent = nullptr;
         Node *currentNode = nullptr;
         search(x, parent, currentNode);
 
-        //step 5: if parent is NULL (tree is empty)
+        // step 5: if parent is NULL (tree is empty)
         if (parent == nullptr)
         {
-            //5a: mark the new node as ROOT
+            // 5a: mark the new node as ROOT
             ROOT = newNode;
 
-            //5b exit 
+            // 5b exit
             return;
         }
 
-        //step 6: if the value in the data field of the new node is less than that of parent
+        // step 6: if the value in the data field of the new node is less than that of parent
         if (x < parent->info)
         {
-            //6a: make the left chlild of parent point to the new node 
+            // 6a: make the left chlild of parent point to the new node
             parent->leftchild = newNode;
 
-            //6b : exit
+            // 6b : exit
             return;
         }
-        //step 7: if the value in the data field of the new node is greater than that of the parent 
+        // step 7: if the value in the data field of the new node is greater than that of the parent
         else if (x > parent->info)
         {
-            //7A: MAKE THE RIGHT CHILD OF PARENT POINT TO THE NEW NODE
+            // 7A: MAKE THE RIGHT CHILD OF PARENT POINT TO THE NEW NODE
             parent->rightchild = newNode;
 
-            //7b : exit
+            // 7b : exit
             return;
         }
     }
+
+    void search(int element, Node *&parent, Node *&currentNode)
+{
+        // this function searches the current node of the specified node as well as the current node of its parent
+        currentNode = ROOT;
+    parent = nullptr;
+    while ((currentNode != nullptr) && (currentNode->info != element))
+    {
+        parent = currentNode;
+        if (element < currentNode->info)
+            currentNode = currentNode->leftchild;
+        else
+        currentNode = currentNode->rightchild;
+    }
+}
 };
